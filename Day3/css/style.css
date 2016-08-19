@@ -1,0 +1,36 @@
+.container{
+	width:1000px;
+	height:600px;
+	margin:0 auto;
+}
+
+.blocks{
+	float:left;
+	border:2px solid black;
+	width:728px;
+	height:100%;
+}
+
+.button  {
+	float:left;
+	border: 1px solid gray;
+	width:150px;
+	height:50px;
+	margin:3px 10px;
+	cursor:pointer;
+	text-align: center;
+	color:black;
+}
+
+.button.disabled{
+	cursor: default;
+	color: lightgrey;
+}
+
+.block{
+	float:left;
+	width:50px;
+	height:50px;
+	border:1px solid lightgrey;
+	text-align:center;
+}
