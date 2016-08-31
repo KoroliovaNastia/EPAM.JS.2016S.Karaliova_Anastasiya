@@ -1,7 +1,7 @@
-Zombie.Michael = function(line){
+Zombie.Michael = function(line, endPoint){
 
-	var parent = Zombie(line);
-	$(parent.parentDiv).addClass('michael');
+	var parent = Zombie.call(this, line, endPoint);
+	parent.parentDiv.addClass('michael');
 
 };
 
