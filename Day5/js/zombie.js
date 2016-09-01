@@ -4,7 +4,9 @@ function Zombie(line, endPoint){
 	var styleClass = "zombie";
 	var endPosition = endPoint;
 	var position = 0;
-	self.speed = 1;
+	self.slowSpeed = 0.5;
+	self.mySpeed = 0.5;
+	self.speed = 0.5;
 	self.parentDiv = $('<div class=\"zombie\"></div>');
 	self.barDiv = $('<div class=\"bar\">');
 	self.healthDiv = $('<div class=\"health"\></div>');
@@ -13,12 +15,12 @@ function Zombie(line, endPoint){
 	self.myHealth = self.startHealth;
 	self.parentDiv.append(self.barDiv);
 	line.append(self.parentDiv);
-	$('.bar').append(self.healthDiv, self.percent);
+	self.barDiv.append(self.healthDiv, self.percent);
 	//line.append(self.parentDiv);
 	
 	self.doMove = function(){
 	
-		position += self.speed;
+		position += self.mySpeed;
 	
 		if(position < endPosition){
 	
@@ -49,13 +51,13 @@ function Zombie(line, endPoint){
 		var valuePercent = self.myHealth / self.startHealth * 100; 
 		var diffPercent = difference * 100 / self.startHealth;
 		
-		if(self.myHealth > 0){
-			
-			self.myHealth -= difference;
+		self.myHealth -= difference;
 			//value -= value*diffPercent;
 			valuePercent -= diffPercent;
+		
+		if(self.myHealth > 0){
 			
-			$('.p').text(valuePercent + "%");
+			$('p').text(valuePercent + "%");
 			$('.health').width(valuePercent + "%");
 			
 		} else{

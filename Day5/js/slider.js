@@ -57,7 +57,23 @@ $(".game-over").css("display", "block");
 
 function slowUp(){
 	
+	for (var i = 0; i < zombies.length; i++ ){
+			
+			zombies[i].mySpeed = zombies[i].slowSpeed; 
+			
+		}
 	
+	var timerId = setInterval(moveZombies ,1000)
+	
+	setTimeout(function(){
+		
+		clearInterval(timerId);
+		for (var i = 0; i < zombies.length; i++ ){
+			
+			zombies[i].mySpeed = zombies[i].speed; 
+			
+		}
+	}, 10000)
 	
 }
 
@@ -82,6 +98,10 @@ function growOld(){
 
 function explode(){
 	
-	
+	for(var i = 0; i < zombies.length; i++){
+			
+			zombies[i].health(15);
+			
+		}
 	
 }
