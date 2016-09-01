@@ -1,6 +1,6 @@
 var zombiesType = [Zombie.Michael, Zombie.Strong];
 var zombies = [];
-var endPoint = 840;
+var endPoint = 860;
 var timer;
 
 $(function(){

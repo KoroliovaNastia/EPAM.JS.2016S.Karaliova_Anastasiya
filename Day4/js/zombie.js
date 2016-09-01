@@ -5,7 +5,6 @@ function Zombie(line, endPoint){
 	var endPosition = endPoint;
 	var position = 0;
 	self.speed = 1;
-	// var $myLine = line;
 	self.parentDiv = $('<div class=\"zombie\"></div>');
 	line.append(self.parentDiv);
 	
@@ -13,9 +12,9 @@ function Zombie(line, endPoint){
 	
 		position += self.speed;
 	
-		if(position < 200){
+		if(position < endPosition){
 	
-		self.parentDiv.animate({ right: position + "px" });
+		self.parentDiv.css("right", position );
 		
 		 } else {
 		
@@ -38,18 +37,3 @@ function Zombie(line, endPoint){
 	}
 	return self;
 };
-
-// Zombie.prototype.doMove = function(){
-
-	// // doMove: function(){
-	
-		// $('.zombie').animate({ "right": "-=1px" });
-	
-	// // },
-
-	// // die: function(){
-	
-		// // self.parentDiv.remove();
-			
-	// // }
-// };
