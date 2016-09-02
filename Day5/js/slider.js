@@ -10,7 +10,8 @@ $(function(){
 	$('#btnGrowOld').on("click", growOld);
 	$('#btnExplode').on("click", explode);
 	
-	timer = setInterval(moveZombies, 100);
+	timerGenerate = setInterval(generateZombies, 6000);
+	timerMove = setInterval(moveZombies, 100);
 });
 
 function createZombie(){
@@ -18,15 +19,17 @@ function createZombie(){
 	var $randLine = $('.field-line').eq(random(0, 5));
 	var randType = random(0, zombiesType.length);
 	var randZombie = zombiesType[randType];
-	//$randLine.append('<div class=\"zombie michael\"></div>');
-
 	var zombie = new randZombie($randLine, endPoint);
 	zombie.subscribe(gameOver);
 	zombies.push(zombie);
-	// zombie.type = $randZombie;
-	// zombie.addClass($ranZombie);
 	
 };
+
+function generateZombies(){
+	
+	createZombie();
+	
+}
 
 function moveZombies(){
 
@@ -46,12 +49,15 @@ function random(min, max){
 
 function gameOver(){
 
-	clearTimeout(timer);
+	clearTimeout(timerGenerate);
+	clearTimeout(timerMove);
     for(var i = 0; i < zombies.length; i++){
+		
         zombies[i].die(false);
     }
+	
     zombies = [];
-$(".game-over").css("display", "block");
+	$(".game-over").css("display", "block");
 
 }
 
@@ -63,18 +69,23 @@ function slowUp(){
 			
 		}
 	
-	var timerId = setInterval(moveZombies ,1000)
+	timerMove = setInterval(moveZombies ,100)
+	clearInterval(timerGenerate);
 	
 	setTimeout(function(){
 		
-		clearInterval(timerId);
+		clearInterval(timerMove);
 		for (var i = 0; i < zombies.length; i++ ){
 			
 			zombies[i].mySpeed = zombies[i].speed; 
 			
 		}
+		
+		timerGenerate = setInterval(generateZombies, 6000);
+		
 	}, 10000)
 	
+	freezBtn($('#btnSlowUp'), slowUp);
 }
 
 function growOld(){
@@ -89,19 +100,48 @@ function growOld(){
 		
 	},1000)
 	
+	clearInterval(timerGenerate);
+	
 	setTimeout(function(){
 		
 		clearInterval(timerId);
+		timerGenerate = setInterval(generateZombies, 6000);
 		
 	}, 10000)
+	
+	freezBtn($('#btnGrowOld'), growOld);
+	
+	if(! $("div").is(".zombie")){
+		
+		gameOver();
+		
+	}
 }
 
 function explode(){
 	
 	for(var i = 0; i < zombies.length; i++){
 			
-			zombies[i].health(15);
+		zombies[i].health(15);
 			
-		}
+	}
 	
+	if(! $("div").is(".zombie")){
+		
+		gameOver();
+		
+	}
+}
+
+function freezBtn(btn, func){
+	
+	
+	btn.off("click");
+	btn.css({"color": "lightgrey", "cursor": "default"});
+	setTimeout(function(){
+		
+		btn.on("click", func);
+		btn.css({"color": "black", "cursor": "pointer"});
+		
+	}, 10000)
 }

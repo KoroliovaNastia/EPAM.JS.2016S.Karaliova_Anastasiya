@@ -5,20 +5,20 @@ function Zombie(line, endPoint){
 	var endPosition = endPoint;
 	var position = 0;
 	self.slowSpeed = 0.5;
-	self.mySpeed = 0.5;
 	self.speed = 0.5;
-	self.parentDiv = $('<div class=\"zombie\"></div>');
-	self.barDiv = $('<div class=\"bar\">');
-	self.healthDiv = $('<div class=\"health"\></div>');
-	self.percent = $('<p></p>');
+	self.mySpeed = self.speed;
 	self.startHealth = 50;
 	self.myHealth = self.startHealth;
+	self.parentDiv = $('<div class=\"zombie\"></div>');
+	self.barDiv = $('<div class=\"bar\"></div>');
+	self.healthDiv = $('<div class=\"health"\></div>');
+	self.healthParagraph = $('<p>'+ this.myHealth + "/" + this.startHealth + '</p>');
+	self.healthDiv.append(self.healthParagraph);
 	self.parentDiv.append(self.barDiv);
+	self.barDiv.append(self.healthDiv);
 	line.append(self.parentDiv);
-	self.barDiv.append(self.healthDiv, self.percent);
-	//line.append(self.parentDiv);
 	
-	self.doMove = function(){
+	this.doMove = function(){
 	
 		position += self.mySpeed;
 	
@@ -34,31 +34,31 @@ function Zombie(line, endPoint){
 	
 	 };
 	 
-	self.die = function(){
+	this.die = function(){
 	 
 		self.parentDiv.remove();
-	 
+		self.endGame = function(){};
+		
 	 };
 	
-	self.subscribe = function(gameOver){
+	this.subscribe = function(gameOver){
 		
 		self.endGame = gameOver;
 		
 	}
 	
-	self.health = function(difference){
+	this.health = function(difference){
 		
 		var valuePercent = self.myHealth / self.startHealth * 100; 
 		var diffPercent = difference * 100 / self.startHealth;
 		
 		self.myHealth -= difference;
-			//value -= value*diffPercent;
-			valuePercent -= diffPercent;
+		valuePercent -= diffPercent;
 		
 		if(self.myHealth > 0){
 			
-			$('p').text(valuePercent + "%");
 			$('.health').width(valuePercent + "%");
+			self.healthParagraph.text(self.myHealth + "/" + self.startHealth);
 			
 		} else{
 			
